@@ -21,6 +21,9 @@ public class Grid : MonoBehaviour
     public Sprite pointRed;
     public Sprite pointEmpty;
 
+    public RuntimeAnimatorController blueAController;
+    public RuntimeAnimatorController redAController;
+
     private Sprite actualPoint;
     private Sprite actualBox;
 
@@ -52,18 +55,8 @@ public class Grid : MonoBehaviour
             gridPoint.transform.localScale = new Vector3(2, 2, 1);
 
             gridPoints.Add(gridPoint);
-            // handler touch options
-            //PointTouch touchHandler = gridPoint.AddComponent<PointTouch>();
-            //touchHandler.grid = this;
-
-            //touchHandler.pointX = (int)pointPosition.x;
-            //touchHandler.pointY = (int)pointPosition.y;
-
-            //touchHandler.pointX = i % gridSizeX;
-            //touchHandler.pointY = i / gridSizeX;
 
         }
-        //gridPoints = new GameObject[gridSizeX, gridSizeY];
 
         // draw tiles
         for (int i = 0; i < gridSizeX * gridSizeY; i++)
@@ -81,55 +74,6 @@ public class Grid : MonoBehaviour
 
         }
 
-    }
-
-    public void UpdateTileSprite(int x, int y)
-    {
-        int index = (y + (int)origine.y) * gridSizeX + (x + (int)origine.x) + 100;
-        Debug.Log("Index " + index);
-
-        if (CheckAdjacentPoints(x, y))
-        {
-            Debug.Log("all");
-            //int index = (y + (int)origine.y) * gridSizeX + (x + (int)origine.x);
-            if (index >= 0 && index < gridTiles.Count)
-            {
-                GameObject gridTile = gridTiles[index];
-                if (gridTile != null)
-                {
-                    SpriteRenderer tileRenderer = gridTile.GetComponent<SpriteRenderer>();
-                    if (tileRenderer != null)
-                    {
-                        tileRenderer.sprite = blueTile;
-                    }
-                }
-            }
-        }
-    }
-
-    // Check if adjacents points are all blue
-    private bool CheckAdjacentPoints(int x, int y)
-    {
-        return IsBluePoint(x - 1, y) && IsBluePoint(x + 1, y) 
-        && IsBluePoint(x, y) && IsBluePoint(x-1, y - 1);
-    }
-
-    // Vérifiez si un point est bleu
-    private bool IsBluePoint(int x, int y)
-    {
-        /*if (x >= 0 && x < gridSizeX && y >= 0 && y < gridSizeY)
-        {
-            GameObject point = gridPoints[x, y];
-            if (point != null)
-            {
-                Renderer pointRenderer = point.GetComponent<Renderer>();
-                if (pointRenderer != null && pointRenderer.material.color == Color.blue)
-                {
-                    return true;
-                }
-            }
-        }*/
-        return false;
     }
 
     // Update is called once per frame
@@ -181,23 +125,6 @@ public class Grid : MonoBehaviour
                         actualBox = (actualBox == gridBoxBlue) ? gridBoxRed : gridBoxBlue;
                     }
                 }
-                /*Renderer rend = GetComponent<Renderer>();
-                if (rend != null)
-                {
-                    if (colored)
-                    {
-                        rend.material.color = originalColor;
-                        colored = false;
-                    }
-                    else
-                    {
-                        rend.material.color = Color.blue;
-                        colored = true;
-                    }
-
-                    // update the sprite of the tile at the position (PointX, PointY)
-                    grid.UpdateTileSprite(pointX, pointY);
-                }*/
             }
         }
     }
@@ -208,37 +135,25 @@ public class Grid : MonoBehaviour
         int i3 = (x + 1) + (y + 1) * (gridSizeX + 1);
         int i4 = x + (y + 1) * (gridSizeX + 1);
 
-        if (i1 < 0 || i1 > (gridSizeX + 1) * (gridSizeY + 1)){
+
+        return canFormTile(i1, actual) && canFormTile(i2, actual) 
+        && canFormTile(i3, actual) && canFormTile(i4, actual);
+
+    }
+
+    public bool canFormTile(int pointNumber, Sprite actual)
+    {
+        // check if the point is has the good color
+        if (pointNumber < 0 || pointNumber > (gridSizeX + 1) * (gridSizeY + 1)){
             return false;
         }
 
-        if (i2 < 0 || i2 > (gridSizeX + 1) * (gridSizeY + 1)){
+        // check if the point is for the actual player
+        if (gridPoints[pointNumber].GetComponent<SpriteRenderer>().sprite != actual){
             return false;
         }
 
-        if (i3 < 0 || i3 > (gridSizeX + 1) * (gridSizeY + 1)){
-            return false;
-        }
-
-        if (i4 < 0 || i4 > (gridSizeX + 1) * (gridSizeY + 1)){
-            return false;
-        }
-
-        if (gridPoints[i1].GetComponent<SpriteRenderer>().sprite != actual){
-            return false;
-        }
-
-        if (gridPoints[i2].GetComponent<SpriteRenderer>().sprite != actual){
-            return false;
-        }
-
-        if (gridPoints[i3].GetComponent<SpriteRenderer>().sprite != actual){
-            return false;
-        }
-
-        if (gridPoints[i4].GetComponent<SpriteRenderer>().sprite != actual){
-            return false;
-        }
         return true;
     }
+
 }

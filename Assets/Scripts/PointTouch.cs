@@ -48,9 +48,6 @@ public class PointTouch : MonoBehaviour
                         rend.material.color = Color.blue;
                         colored = true;
                     }
-
-                    // update the sprite of the tile at the position (PointX, PointY)
-                    grid.UpdateTileSprite(pointX, pointY);
                 }
             }
         }

@@ -477,6 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1890920298}
   - component: {fileID: 1890920297}
+  - component: {fileID: 1890920299}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -508,6 +509,8 @@ MonoBehaviour:
   pointBlue: {fileID: 21300000, guid: 7ab43e5bcaf5b8d4a80980c7f99fd91e, type: 3}
   pointRed: {fileID: 21300000, guid: 357a7bcc030c9ef419690f89c42a283d, type: 3}
   pointEmpty: {fileID: 21300000, guid: 99923920f1c44274c8a0f03b335dc51b, type: 3}
+  blueAController: {fileID: 9100000, guid: 27e1da22ab87f0542b11a125135866f3, type: 2}
+  redAController: {fileID: 9100000, guid: 2cdcbbf2d85fb8043809a59b51ed4713, type: 2}
 --- !u!4 &1890920298
 Transform:
   m_ObjectHideFlags: 0
@@ -523,6 +526,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1890920299
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890920296}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9af6eef18167a2c4ca3b1eee6d783cba, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
