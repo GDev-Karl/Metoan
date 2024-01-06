@@ -7,6 +7,10 @@ public class PointTouch : MonoBehaviour
     public Color originalColor;
     public bool colored = false;
 
+    public Grid grid; // reference to the grid
+    public int pointX;
+    public int pointY;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +48,9 @@ public class PointTouch : MonoBehaviour
                         rend.material.color = Color.blue;
                         colored = true;
                     }
+
+                    // update the sprite of the tile at the position (PointX, PointY)
+                    grid.UpdateTileSprite(pointX, pointY);
                 }
             }
         }
