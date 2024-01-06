@@ -502,6 +502,12 @@ MonoBehaviour:
   tilePrefab: {fileID: 6547910913395623959, guid: ccb19ab2c845e1a4fbaf3441b4b99487, type: 3}
   pointPrefab: {fileID: 8192464678983741240, guid: c0abc8286c046ba409cba6302ab0bb4c, type: 3}
   blueTile: {fileID: 21300000, guid: b88ecc8708f90aa49a96409bfa3eedfa, type: 3}
+  gridBoxBlue: {fileID: 21300000, guid: b88ecc8708f90aa49a96409bfa3eedfa, type: 3}
+  gridBoxRed: {fileID: 21300000, guid: 51da656c3ccf6e947bf0f4e9a6cbd798, type: 3}
+  gridBoxEmpty: {fileID: 21300000, guid: 4d59117bec658b949bc4e80c6e2d70ac, type: 3}
+  pointBlue: {fileID: 21300000, guid: 7ab43e5bcaf5b8d4a80980c7f99fd91e, type: 3}
+  pointRed: {fileID: 21300000, guid: 357a7bcc030c9ef419690f89c42a283d, type: 3}
+  pointEmpty: {fileID: 21300000, guid: 99923920f1c44274c8a0f03b335dc51b, type: 3}
 --- !u!4 &1890920298
 Transform:
   m_ObjectHideFlags: 0
