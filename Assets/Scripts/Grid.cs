@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public int gridSizeX, gridSizeY;
+    public int numberColumns, numberLines;
     public Vector2 origine;
 
     public GameObject tilePrefab;
     public GameObject pointPrefab;
-
+/*
+    
     public Sprite blueTile;
+
     
     public Sprite gridBoxBlue;
     public Sprite gridBoxRed;
@@ -20,12 +22,12 @@ public class Grid : MonoBehaviour
     public Sprite pointBlue;
     public Sprite pointRed;
     public Sprite pointEmpty;
-
+    
     public RuntimeAnimatorController blueAController;
     public RuntimeAnimatorController redAController;
 
     private Sprite actualPoint;
-    private Sprite actualBox;
+    private Sprite actualBox;*/
 
     //private GameObject[,] gridPoints;
     private List<GameObject> gridPoints = new List<GameObject>();
@@ -34,8 +36,8 @@ public class Grid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        actualPoint = pointBlue;
-        actualBox = gridBoxBlue;
+        // actualPoint = pointBlue;
+        // actualBox = gridBoxBlue;
         origine = new Vector2(-8, -3);
         CreateGrid();
     }
@@ -43,12 +45,12 @@ public class Grid : MonoBehaviour
     public void CreateGrid()
     {
         // draw points
-        for (int i = 0; i < (gridSizeX + 1) * (gridSizeY + 1); i++)
+        for (int i = 0; i < (numberColumns + 1) * (numberLines + 1); i++)
         {
             Vector2 pointPosition = new Vector2();
     
-            pointPosition.x = (i % (gridSizeX + 1)) + origine.x - 0.5f;
-            pointPosition.y = (i / (gridSizeX + 1)) + origine.y - 0.5f;
+            pointPosition.x = (i % (numberColumns + 1)) + origine.x - 0.5f;
+            pointPosition.y = (i / (numberColumns + 1)) + origine.y - 0.5f;
 
             GameObject gridPoint = Instantiate(pointPrefab, pointPosition, Quaternion.identity);
             gridPoint.transform.SetParent(transform);
@@ -59,25 +61,63 @@ public class Grid : MonoBehaviour
         }
 
         // draw tiles
-        for (int i = 0; i < gridSizeX * gridSizeY; i++)
+        for (int i = 0; i < numberColumns * numberLines; i++)
         {
             Vector2 tilePosition = new Vector2();
     
-            tilePosition.x = (i % gridSizeX) + origine.x;
-            tilePosition.y = (i / gridSizeX) + origine.y;
+            tilePosition.x = (i % numberColumns) + origine.x;
+            tilePosition.y = (i / numberColumns) + origine.y;
 
             GameObject gridTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
             gridTile.transform.SetParent(transform);
             gridTile.transform.localScale = new Vector3(2, 2, 1);
 
             gridTiles.Add(gridTile);
-
         }
 
     }
 
+    public Sprite GetPoint(int index){
+        return (index >= 0 && index < gridPoints.Count) ? gridPoints[index].GetComponent<SpriteRenderer>().sprite : null;
+    }
+
+    public void SetPoint(int index, Sprite sprite){
+        if (index >= 0 && index < gridPoints.Count) {
+            gridPoints[index].GetComponent<SpriteRenderer>().sprite = sprite;
+        }
+    }
+
+    public Sprite GetBox(int index){
+        return (index >= 0 && index < gridTiles.Count) ? gridTiles[index].GetComponent<SpriteRenderer>().sprite : null;
+    }
+
+    public void SetBox(int index, Sprite box, int player){
+        if (index >= 0 && index < gridTiles.Count) {
+            Debug.Log("box index " + index);
+            gridTiles[index].GetComponent<SpriteRenderer>().sprite = box;
+            //Animator animator = gridTiles[index].GetComponent<Animator>();
+            //animator.SetInt("player", player);
+        }
+    }
+
+    public int GetColumns(){
+        return numberColumns;
+    }
+
+    public int GetLines(){
+        return numberLines;
+    }
+
+    public int PointIndexOf(GameObject gameObject){
+        return gridPoints.IndexOf(gameObject);
+    }
+
+    public int BoxIndexOf(GameObject gameObject){
+        return gridTiles.IndexOf(gameObject);
+    }
+/*
     // Update is called once per frame
-    void Update()
+    void Barby()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -95,28 +135,28 @@ public class Grid : MonoBehaviour
 
                     int i = gridPoints.IndexOf(hitCollider.gameObject);
 
-                    int iligne = i / (gridSizeX + 1);
-                    int icolone = i % (gridSizeX + 1);
+                    int iligne = i / (numberColumns + 1);
+                    int icolone = i % (numberColumns + 1);
 
                     bool continuePlay = false;
 
                     if (IsValide(icolone, iligne, actualPoint)){
-                        gridTiles[icolone + iligne * gridSizeX].GetComponent<SpriteRenderer>().sprite = actualBox;
+                        gridTiles[icolone + iligne * numberColumns].GetComponent<SpriteRenderer>().sprite = actualBox;
                         continuePlay = true;
                     }
 
                     if (IsValide(icolone - 1, iligne - 1, actualPoint)){
-                        gridTiles[icolone - 1 + (iligne - 1) * gridSizeX].GetComponent<SpriteRenderer>().sprite = actualBox;
+                        gridTiles[icolone - 1 + (iligne - 1) * numberColumns].GetComponent<SpriteRenderer>().sprite = actualBox;
                         continuePlay = true;
                     }
 
                     if (IsValide(icolone - 1, iligne, actualPoint)){
-                        gridTiles[icolone - 1 + iligne * gridSizeX].GetComponent<SpriteRenderer>().sprite = actualBox;
+                        gridTiles[icolone - 1 + iligne * numberColumns].GetComponent<SpriteRenderer>().sprite = actualBox;
                         continuePlay = true;
                     }
 
                     if (IsValide(icolone, iligne - 1, actualPoint)){
-                        gridTiles[icolone + (iligne - 1) * gridSizeX].GetComponent<SpriteRenderer>().sprite = actualBox;
+                        gridTiles[icolone + (iligne - 1) * numberColumns].GetComponent<SpriteRenderer>().sprite = actualBox;
                         continuePlay = true;
                     }
                     
@@ -130,10 +170,10 @@ public class Grid : MonoBehaviour
     }
 
     private bool IsValide(int x, int y, Sprite actual){
-        int i1 = x + y * (gridSizeX + 1);
-        int i2 = (x + 1) + y * (gridSizeX + 1);
-        int i3 = (x + 1) + (y + 1) * (gridSizeX + 1);
-        int i4 = x + (y + 1) * (gridSizeX + 1);
+        int i1 = x + y * (numberColumns + 1);
+        int i2 = (x + 1) + y * (numberColumns + 1);
+        int i3 = (x + 1) + (y + 1) * (numberColumns + 1);
+        int i4 = x + (y + 1) * (numberColumns + 1);
 
 
         return canFormTile(i1, actual) && canFormTile(i2, actual) 
@@ -144,7 +184,7 @@ public class Grid : MonoBehaviour
     public bool canFormTile(int pointNumber, Sprite actual)
     {
         // check if the point is has the good color
-        if (pointNumber < 0 || pointNumber > (gridSizeX + 1) * (gridSizeY + 1)){
+        if (pointNumber < 0 || pointNumber > (numberColumns + 1) * (numberLines + 1)){
             return false;
         }
 
@@ -155,5 +195,5 @@ public class Grid : MonoBehaviour
 
         return true;
     }
-
+*/
 }
