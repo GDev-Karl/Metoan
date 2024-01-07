@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1031558546412888853}
   - component: {fileID: 789913371518612055}
-  - component: {fileID: 6077113634770407140}
+  - component: {fileID: -6676516276366934190}
   m_Layer: 0
   m_Name: Point
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &6077113634770407140
+--- !u!58 &-6676516276366934190
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,7 +114,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
