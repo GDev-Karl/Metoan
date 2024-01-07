@@ -16,19 +16,23 @@ public class NewBehaviourScript : MonoBehaviour
     public Grid grid;
 
     private List<Player> players = new List<Player>();
-
     private int curentPlayer;
+
+    private AudioSource gameAudio;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Player inex " + playersIndex.Count);
+        gameAudio = GetComponent<AudioSource>();
+        gameAudio.Play();
+
+        Debug.Log("Player index " + playersIndex.Count);
 
         for (int i = 0; i < playersIndex.Count; i++)
         {
             int spriteIndex = playersIndex[i];
 
-            Debug.Log("sprite idex " + spriteIndex);
+            Debug.Log("sprite index " + spriteIndex);
             Player player =  new Player();
             player.score = 0;
             player.box = boxes[spriteIndex];
@@ -55,13 +59,20 @@ public class NewBehaviourScript : MonoBehaviour
             // check if the point is touched
             Collider2D hitCollider = Physics2D.OverlapPoint(new Vector2(touchPos.x, touchPos.y));
 
+            if (hitCollider == null)
+                Debug.Log("hitCollider est null");
+
             if (hitCollider != null)
             {
                 // change the color of pointPrefab
+
                 SpriteRenderer renderer = hitCollider.gameObject.GetComponent<SpriteRenderer>();
                 if (renderer != null && renderer.sprite == points[0]){
                     renderer.sprite = players[curentPlayer].point;
+                    
+                    Debug.Log("Current player " + curentPlayer);
 
+                    // there is a problem here hitCollider.gameObject is null
                     int i = grid.PointIndexOf(hitCollider.gameObject);
 
                     int iligne = i / (grid.GetColumns() + 1);
