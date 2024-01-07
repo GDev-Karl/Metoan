@@ -10,6 +10,10 @@ public class Grid : MonoBehaviour
 
     public GameObject tilePrefab;
     public GameObject pointPrefab;
+
+    public AudioClip boxClip;
+    public AudioClip pointClip;
+    private AudioSource audio;
 /*
     
     public Sprite blueTile;
@@ -38,8 +42,9 @@ public class Grid : MonoBehaviour
     {
         // actualPoint = pointBlue;
         // actualBox = gridBoxBlue;
-        origine = new Vector2(-8, -3);
+        //origine = new Vector2(-8, -3);
         CreateGrid();
+        audio = GetComponent<AudioSource>();
     }
 
     public void CreateGrid()
@@ -84,6 +89,9 @@ public class Grid : MonoBehaviour
     public void SetPoint(int index, Sprite sprite){
         if (index >= 0 && index < gridPoints.Count) {
             gridPoints[index].GetComponent<SpriteRenderer>().sprite = sprite;
+
+            audio.clip = pointClip;
+            audio.Play();
         }
     }
 
@@ -94,10 +102,14 @@ public class Grid : MonoBehaviour
     public void SetBox(int index, Sprite box, int player){
         if (index >= 0 && index < gridTiles.Count) {
             Debug.Log("box index " + index);
-            gridTiles[index].GetComponent<SpriteRenderer>().sprite = box;
-            //Animator animator = gridTiles[index].GetComponent<Animator>();
-            //animator.SetInt("player", player);
+            //gridTiles[index].GetComponent<SpriteRenderer>().sprite = box;
+            Animator animator = gridTiles[index].GetComponent<Animator>();
+            animator.SetInteger("player", player + 1);
+
+            audio.clip = boxClip;
+            audio.Play();
         }
+
     }
 
     public int GetColumns(){
