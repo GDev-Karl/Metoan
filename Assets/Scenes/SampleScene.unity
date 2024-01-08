@@ -958,7 +958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &514414860
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1486,7 +1486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &637770147
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3125,8 +3125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e8d4966e9411104a953e7771ea62044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberColumns: 5
-  numberLines: 3
+  numberColumns: 12
+  numberLines: 7
   origine: {x: -5.5, y: -2.5}
   tilePrefab: {fileID: 6547910913395623959, guid: ccb19ab2c845e1a4fbaf3441b4b99487, type: 3}
   pointPrefab: {fileID: 8192464678983741240, guid: c0abc8286c046ba409cba6302ab0bb4c, type: 3}
