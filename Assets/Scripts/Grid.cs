@@ -13,7 +13,7 @@ public class Grid : MonoBehaviour
 
     public AudioClip boxClip;
     public AudioClip pointClip;
-    private AudioSource audio;
+    private AudioSource audioBox, audioPoint;
 /*
     
     public Sprite blueTile;
@@ -44,7 +44,7 @@ public class Grid : MonoBehaviour
         // actualBox = gridBoxBlue;
         //origine = new Vector2(-8, -3);
         CreateGrid();
-        audio = GetComponent<AudioSource>();
+        audioBox = GetComponent<AudioSource>();
     }
 
     public void CreateGrid()
@@ -89,9 +89,6 @@ public class Grid : MonoBehaviour
     public void SetPoint(int index, Sprite sprite){
         if (index >= 0 && index < gridPoints.Count) {
             gridPoints[index].GetComponent<SpriteRenderer>().sprite = sprite;
-
-            audio.clip = pointClip;
-            audio.Play();
         }
     }
 
@@ -106,8 +103,8 @@ public class Grid : MonoBehaviour
             Debug.Log("Player : " + player);
             animator.SetInteger("player", player);
 
-            audio.clip = boxClip;
-            audio.Play();
+            audioBox.clip = boxClip;
+            audioBox.Play();
         }
 
     }
