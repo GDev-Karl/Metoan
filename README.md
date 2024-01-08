@@ -8,6 +8,11 @@ Metoan est un jeu de réflexion à un contre un se déroulant sur un terrain de 
 
 De plus, le temps joue un rôle crucial. Chaque joueur dispose d'un délai très court pour effectuer son coup. Si vous ne parvenez pas à jouer dans le temps imparti, l'adversaire prendra le relais, et vous ne pourrez plus agir lors de ce tour.
 
+## Configuration de développement
+
+Ce projet a été développé avec Unity 2023.35f. Assurez-vous d'utiliser cette version ou une version ultérieure pour une compatibilité optimale.
+
+
 ## Fonctionnalités (actuelles et futures)
 
 - [x] Mode deux joueurs sur un même téléphone (implémenté)
@@ -27,9 +32,9 @@ De plus, le temps joue un rôle crucial. Chaque joueur dispose d'un délai très
 
 ## Captures d'écran
 
-![Capture d'écran 1](chemin/vers/capture/ecran1.png)
-*Description de la capture d'écran 1.*
+![Partie](img/partie_metaon.PNG)
+*Deroulement d'une partie*
 
-![Capture d'écran 2](chemin/vers/capture/ecran2.png)
-*Description de la capture d'écran 2.*
+![Fin du jeu](img/Fin_jeu.png)
+*Image de félicitaion*
 
