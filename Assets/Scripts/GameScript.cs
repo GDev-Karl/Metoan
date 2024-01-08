@@ -20,6 +20,11 @@ public class NewBehaviourScript : MonoBehaviour
 
     private AudioSource gameAudio;
 
+    public List<Sprite> redSprites;
+    public List<Sprite> blueSprites;
+
+    private GameObject blue, red;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,16 +46,30 @@ public class NewBehaviourScript : MonoBehaviour
             players.Add(player);
         }
 
+        blue = GameObject.Find("Player_1");
+        red = GameObject.Find("Player_2");
         curentPlayer = 0;
     }
 
     private void PrintScore(){
-        scoreUI[curentPlayer].text = "Score Player" + playersIndex[curentPlayer] + " : " + players[curentPlayer].score;
+        //scoreUI[curentPlayer].text = "Score Player" + playersIndex[curentPlayer] + " : " + players[curentPlayer].score
+        scoreUI[curentPlayer].text = "" + players[curentPlayer].score;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (curentPlayer == 0)
+        {
+            blue.GetComponent<SpriteRenderer>().sprite = blueSprites[0];
+            red.GetComponent<SpriteRenderer>().sprite = redSprites[1];
+        }
+        else if (curentPlayer == 1)
+        {
+            blue.GetComponent<SpriteRenderer>().sprite = blueSprites[1];
+            red.GetComponent<SpriteRenderer>().sprite = redSprites[0];
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Player pressed " + (curentPlayer + 1));
