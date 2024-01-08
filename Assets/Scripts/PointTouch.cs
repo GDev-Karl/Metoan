@@ -53,3 +53,29 @@ public class PointTouch : MonoBehaviour
         }
     }
 }
+
+
+
+/*
+private bool GetValideIn(int i1, int i2, int i3, int i4){
+        List<Sprite> sp = new List<Sprite>();
+
+        if (!IsEmpty(i1)) sp.Add(grid.GetPoint(i1));
+        if (!IsEmpty(i2)) sp.Add(grid.GetPoint(i2));
+        if (!IsEmpty(i3)) sp.Add(grid.GetPoint(i3));
+        if (!IsEmpty(i3)) sp.Add(grid.GetPoint(i4));
+
+        for (int i = 0; i < sp.Count - 1; i++){
+            for (int j = i + 1; j < sp.Count; j++){
+                if (sp[i] != sp[j]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private bool IsEmpty(int index){
+        return grid.GetPoint(index) == points[0];
+    }
+    */

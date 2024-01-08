@@ -16,7 +16,7 @@ public class NewBehaviourScript : MonoBehaviour
     public Grid grid;
 
     private List<Player> players = new List<Player>();
-    private int curentPlayer;
+    private int currentPlayer;
 
     private AudioSource gameAudio;
 
@@ -24,6 +24,9 @@ public class NewBehaviourScript : MonoBehaviour
     public List<Sprite> blueSprites;
 
     private GameObject blue, red;
+
+    public Text timerText;
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
@@ -48,31 +51,33 @@ public class NewBehaviourScript : MonoBehaviour
 
         blue = GameObject.Find("Player_1");
         red = GameObject.Find("Player_2");
-        curentPlayer = 0;
+        currentPlayer = 0;
+        timer = 11.0f;
+
+        indicatePlayer();
     }
 
     private void PrintScore(){
-        //scoreUI[curentPlayer].text = "Score Player" + playersIndex[curentPlayer] + " : " + players[curentPlayer].score
-        scoreUI[curentPlayer].text = "" + players[curentPlayer].score;
+        //scoreUI[currentPlayer].text = "Score Player" + playersIndex[currentPlayer] + " : " + players[currentPlayer].score
+        scoreUI[currentPlayer].text = "" + players[currentPlayer].score;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (curentPlayer == 0)
-        {
-            blue.GetComponent<SpriteRenderer>().sprite = blueSprites[0];
-            red.GetComponent<SpriteRenderer>().sprite = redSprites[1];
-        }
-        else if (curentPlayer == 1)
-        {
-            blue.GetComponent<SpriteRenderer>().sprite = blueSprites[1];
-            red.GetComponent<SpriteRenderer>().sprite = redSprites[0];
+        timer -= Time.deltaTime;
+        timerText.text = "" + (int)timer;
+
+        if(timer <= 0){
+            currentPlayer = (currentPlayer + 1) % players.Count;
+            timer = 11.0f;
+
+            indicatePlayer();
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Player pressed " + (curentPlayer + 1));
+            Debug.Log("Player pressed " + (currentPlayer + 1));
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             // check if the point is touched
@@ -87,11 +92,10 @@ public class NewBehaviourScript : MonoBehaviour
 
                 SpriteRenderer renderer = hitCollider.gameObject.GetComponent<SpriteRenderer>();
                 if (renderer != null && renderer.sprite == points[0]){
-                    renderer.sprite = players[curentPlayer].point;
+                    renderer.sprite = players[currentPlayer].point;
                     
-                    Debug.Log("Current player " + curentPlayer);
+                    Debug.Log("Current player " + currentPlayer);
 
-                    // there is a problem here hitCollider.gameObject is null
                     int i = grid.PointIndexOf(hitCollider.gameObject);
 
                     int iligne = i / (grid.GetColumns() + 1);
@@ -102,46 +106,58 @@ public class NewBehaviourScript : MonoBehaviour
                     int index2 = icolone + (iligne - 1) * grid.GetColumns();
                     int index3 = icolone - 1 + (iligne) * grid.GetColumns();
 
-                    Sprite box = players[curentPlayer].box;
-                    int player_index = playersIndex[curentPlayer];
+                    Sprite box = players[currentPlayer].box;
+                    int player_index = playersIndex[currentPlayer];
 
                     bool continuePlay = false;
 
                     if (IsValide(icolone, iligne, grid.GetColumns())){
                         grid.SetBox(index, box, player_index);
                         continuePlay = true;
-                        players[curentPlayer].score += 1;
+                        players[currentPlayer].score += 1;
                         PrintScore();
                     }
 
                     if (IsValide(icolone - 1, iligne - 1, grid.GetColumns())){
                         grid.SetBox(index1, box, player_index);
                         continuePlay = true;
-                        players[curentPlayer].score += 1;
+                        players[currentPlayer].score += 1;
                         PrintScore();
                     }
 
                     if (IsValide(icolone - 1, iligne, grid.GetColumns())){
                         grid.SetBox(index3, box, player_index);
                         continuePlay = true;
-                        players[curentPlayer].score += 1;
+                        players[currentPlayer].score += 1;
                         PrintScore();
                     }
 
                     if (IsValide(icolone, iligne - 1, grid.GetColumns())){
                         grid.SetBox(index2, box, player_index);
                         continuePlay = true;
-                        players[curentPlayer].score += 1;
+                        players[currentPlayer].score += 1;
                         PrintScore();
                     }
                     
                     if (!continuePlay){
-                        curentPlayer = (curentPlayer + 1) % players.Count;
+                        currentPlayer = (currentPlayer + 1) % players.Count;
+                        timer = 11.0f;
+
+                        indicatePlayer();
                     }
                 }
             }
         }
     }
+
+    /*
+    public bool isGameOver(Grid grid)
+    {
+        for (int i = 0; i < numberLines * numberColumns; i++)
+        {
+
+        }
+    }*/
 
     private bool IsValide(int column, int line, int columns){
         int i1 = column + line * (columns + 1);
@@ -155,9 +171,24 @@ public class NewBehaviourScript : MonoBehaviour
 
     }
 
+    public void indicatePlayer()
+    {
+        if (currentPlayer == 0)
+        {
+
+            blue.GetComponent<SpriteRenderer>().sprite = blueSprites[0];
+            red.GetComponent<SpriteRenderer>().sprite = redSprites[1];
+        }
+        else if (currentPlayer == 1)
+        {
+            blue.GetComponent<SpriteRenderer>().sprite = blueSprites[1];
+            red.GetComponent<SpriteRenderer>().sprite = redSprites[0];
+        }
+    }
+
     public bool canFormTile(Sprite point)
     {
-        return point == players[curentPlayer].point;
+        return point == players[currentPlayer].point;
     }
 
     public void AddScore(int player)

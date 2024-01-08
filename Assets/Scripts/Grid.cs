@@ -101,10 +101,10 @@ public class Grid : MonoBehaviour
 
     public void SetBox(int index, Sprite box, int player){
         if (index >= 0 && index < gridTiles.Count) {
-            Debug.Log("box index " + index);
             //gridTiles[index].GetComponent<SpriteRenderer>().sprite = box;
             Animator animator = gridTiles[index].GetComponent<Animator>();
-            animator.SetInteger("player", player + 1);
+            Debug.Log("Player : " + player);
+            animator.SetInteger("player", player);
 
             audio.clip = boxClip;
             audio.Play();
