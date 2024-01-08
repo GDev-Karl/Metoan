@@ -28,9 +28,21 @@ public class NewBehaviourScript : MonoBehaviour
     public Text timerText;
     private float timer;
 
+    public AudioClip pointClip;
+    private AudioSource audioPoint;
+
+    private int emptyPoints;
+
+    public GameObject screenEnd, playerIcon;
+    public Text scoreBlueTect, scoreRedText;
+    public List<Sprite> winners;
+
     // Start is called before the first frame update
     void Start()
     {
+        screenEnd.SetActive(false);
+
+        audioPoint = GetComponents<AudioSource>()[1];
         gameAudio = GetComponent<AudioSource>();
         gameAudio.Play();
 
@@ -55,6 +67,7 @@ public class NewBehaviourScript : MonoBehaviour
         timer = 11.0f;
 
         indicatePlayer();
+        emptyPoints = (grid.GetColumns() + 1) * (grid.GetLines() + 1);
     }
 
     private void PrintScore(){
@@ -65,6 +78,12 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if(emptyPoints == 0){
+            Debug.Log("Game Over");
+            GameOver();
+        }
+
         timer -= Time.deltaTime;
         timerText.text = "" + (int)timer;
 
@@ -93,7 +112,9 @@ public class NewBehaviourScript : MonoBehaviour
                 SpriteRenderer renderer = hitCollider.gameObject.GetComponent<SpriteRenderer>();
                 if (renderer != null && renderer.sprite == points[0]){
                     renderer.sprite = players[currentPlayer].point;
-                    
+
+                    audioPoint.Play();
+                    emptyPoints -= 1;
                     Debug.Log("Current player " + currentPlayer);
 
                     int i = grid.PointIndexOf(hitCollider.gameObject);
@@ -223,13 +244,36 @@ public class NewBehaviourScript : MonoBehaviour
 
     public int getPlayerScore1()
     {
-        return player1_score;
+        return players[0].score;
     }
 
     public int getPlayerScore2()
     {
-        return player2_score;
+        return players[1].score;
     }
 
+    public void GameOver()
+    {
+        int winner;
+
+        screenEnd.SetActive(true);
+        
+        if (getPlayerScore1() > getPlayerScore2()){
+            winner = 0;
+        } 
+        else if (getPlayerScore1() < getPlayerScore2()){
+            winner = 1;
+        }
+        else{
+            winner = 2;
+        }
+        playerIcon.GetComponent<Image>().sprite = winners[winner];
+    
+        Debug.Log("score 1 : " + getPlayerScore1());
+        Debug.Log("score 2 : " + getPlayerScore2());
+
+        scoreBlueTect.text = "" + getPlayerScore1();
+        scoreRedText.text = "" + getPlayerScore2();
+    }
 
 }
